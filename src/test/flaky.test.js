@@ -2,7 +2,8 @@
 
 const { CustomFormatter } = require('../formatter')
 var njstrace = require('njstrace').inject({ formatter: new CustomFormatter() });
-const { getRandomZeroOrOne } = require("../randomNumberGenerator");
+
+const { getRandomZeroOrOne, getRandomInt } = require("../randomNumberGenerator");
 const test = require('ava');
 
 test('foo', async ava => {
@@ -11,6 +12,6 @@ test('foo', async ava => {
 });
 
 test('bar', ava => {
-  const randomBoolValue = getRandomZeroOrOne();
-  ava.is(true, randomBoolValue);
+  const randomInt = getRandomInt(100);
+  ava.is(true, randomInt >= 50);
 });

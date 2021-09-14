@@ -13,4 +13,4 @@ const getRandomZeroOrOne = () => {
     }
 };
 
-module.exports = { getRandomZeroOrOne }
+module.exports = { getRandomZeroOrOne, getRandomInt }
