@@ -51,19 +51,13 @@ const checkRetValue = (passRun, failRun) => {
  */
 const analyzeTestCase = (passRun, failRun) => {
   console.log('Analyzing results...');
-  let result;
-  for (let i = 0; i < passRun.length; i++) {
-    if (passRun[i].state === 'onExit' && failRun[i].state === 'onExit') {
-      if (passRun[i].retLine !== failRun[i].retLine) {
-        result = {
-          pass: { functionName: passRun[i].name, file: passRun[i].file, divergent: passRun[i].retLine },
-          fail: { functionName: failRun[i].name, file: failRun[i].file, divergent: failRun[i].retLine }
-        }
-        break;
-      }
-    }
-  }
-  return result;
+  let retLineRes;
+  let retLineValueRes;
+
+  retLineRes = checkRetLine(passRun, failRun);
+  retLineValueRes = checkRetValue(passRun, failRun);
+
+  return { retLineRes, retLineValueRes };
 }
 
 const runTestCase = async (tua) => {
