@@ -17,6 +17,32 @@ let passRunTrace = false;
 let failRunTrace = false;
 const MAX_RUNS = 100;
 
+const checkRetLine = (passRun, failRun) => {
+  for (let i = 0; i < passRun.length; i++) {
+    const onExit = passRun[i].state === 'onExit' && failRun[i].state === 'onExit';
+    const hasDifferentValues = passRun[i].retLine !== failRun[i].retLine;
+    if (onExit && hasDifferentValues) {
+      return {
+        pass: { functionName: passRun[i].name, file: passRun[i].file, divergentLine: passRun[i].retLine },
+        fail: { functionName: failRun[i].name, file: failRun[i].file, divergentLine: failRun[i].retLine }
+      };
+    }
+  }
+};
+
+const checkRetValue = (passRun, failRun) => {
+  for (let i = 0; i < passRun.length; i++) {
+    const onExit = passRun[i].state === 'onExit' && failRun[i].state === 'onExit';
+    const hasDifferentValues = passRun[i].hasRetValue !== failRun[i].hasRetValue;
+    if (onExit && hasDifferentValues) {
+      return {
+        pass: { functionName: passRun[i].name, file: passRun[i].file, divergentValue: passRun[i].hasRetValue },
+        fail: { functionName: failRun[i].name, file: failRun[i].file, divergentValue: failRun[i].hasRetValue }
+      };
+    }
+  }
+};
+
 /**
  * 
  * @param {array[string]} passRun -  
